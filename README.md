@@ -4,4 +4,5 @@ Test1 (failed)
 Test2 (failed)
 Test3 (failed)
 Test4 (failed)
-Test5
+Test5 (partial success)
+Test6

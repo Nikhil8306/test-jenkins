@@ -1,0 +1,23 @@
+{
+  "name": "test-jenkins",
+  "version": "1.0.0",
+  "description": "This is a test project for testing jenkins",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nikhil8306/test-jenkins.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nikhil8306/test-jenkins/issues"
+  },
+  "homepage": "https://github.com/Nikhil8306/test-jenkins#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

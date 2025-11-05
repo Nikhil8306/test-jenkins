@@ -36,8 +36,8 @@ pipeline {
             steps {
                 echo 'Deploying application with PM2...'
                 sh '''
-                    npx pm2 stop test-jenkins
-                    npx pm2 delete test-jenkins
+                    npx pm2 stop test-jenkins || true
+                    npx pm2 delete test-jenkins || true
                     
                     npx pm2 start index.js --name test-jenkins
                     

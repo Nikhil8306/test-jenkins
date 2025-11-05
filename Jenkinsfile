@@ -36,15 +36,15 @@ pipeline {
             steps {
                 echo 'Deploying application with PM2...'
                 sh '''
-                    pm2 stop test-jenkins
-                    pm2 delete test-jenkins
+                    npx pm2 stop test-jenkins
+                    npx pm2 delete test-jenkins
                     
-                    pm2 start index.js --name test-jenkins
+                    npx pm2 start index.js --name test-jenkins
                     
-                    pm2 save
+                    npx pm2 save
                     
-                    pm2 list
-                    pm2 info test-jenkins
+                    npx pm2 list
+                    npx pm2 info test-jenkins
                 '''
             }
         }

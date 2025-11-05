@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
     res.send("Hello There")
 })
 
-app.get("/", async (_, res) => {
+app.get("/secret", async (_, res) => {
     const secret_name = "testenvs";
 
     const client = new SecretsManagerClient({

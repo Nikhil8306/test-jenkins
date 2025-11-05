@@ -1,8 +1,6 @@
 pipeline {
     agent any
-
-    environment {}
-
+    
     stages {
         stage('Checkout') {
             steps {
@@ -11,31 +9,42 @@ pipeline {
                     credentialsId: '391c318d-fd4d-4087-999e-4f0de78b6fda' 
             }
         }
-
+        
         stage('Install Dependencies') {
             steps {
                 echo 'Installing dependencies!'
                 sh 'npm install'
             }
         }
-
+        
         stage('Build') {
+            steps {
+                echo 'Build Stage'
+            }
         }
-
+        
         stage('Test') {
+            steps {
+                echo 'Test stage'
+            }
         }
-
+        
         stage('Start Server') {
             steps {
                 echo 'Starting Server!'
-                sh 'node index.js' 
+                sh '''
+                    pkill -f "node index.js" || true
+                    nohup node index.js > server.log 2>&1 &
+                    sleep 3
+                    echo "Server started"
+                '''
             }
         }
     }
-
+    
     post {
         success {
-            echo 'Sucess !'
+            echo 'Success!'
         }
         failure {
             echo 'Something went wrong'

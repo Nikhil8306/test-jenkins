@@ -1,7 +1,6 @@
 pipeline {
     agent any
-
-
+    
     stages {
         stage('Checkout') {
             steps {
@@ -14,6 +13,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Installing dependencies!'
+                sh 'node --version'
+                sh 'npm --version'
                 sh 'npm install'
             }
         }
@@ -27,17 +28,23 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Test stage'
+                // sh 'npm test'
             }
         }
         
-        stage('Start Server') {
+        stage('Deploy with PM2') {
             steps {
-                echo 'Starting Server!'
+                echo 'Deploying application with PM2...'
                 sh '''
-                    pkill -f "node index.js" || true
-                    nohup node index.js > server.log 2>&1 &
-                    sleep 3
-                    echo "Server started"
+                    pm2 stop test-jenkins
+                    pm2 delete test-jenkins
+                    
+                    pm2 start index.js --name test-jenkins
+                    
+                    pm2 save
+                    
+                    pm2 list
+                    pm2 info test-jenkins
                 '''
             }
         }
@@ -45,10 +52,10 @@ pipeline {
     
     post {
         success {
-            echo 'Success!'
+            echo 'Success! Application deployed with PM2'
         }
         failure {
-            echo 'Something went wrong'
+            echo 'Deployment failed'
         }
     }
 }

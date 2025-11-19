@@ -3,7 +3,9 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            sh 'pwd'
+            steps {
+              sh 'pwd'
+            }
         }
     }
     

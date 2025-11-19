@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-              sh 'pwd'
+              echo "Hello World"
             }
         }
     }

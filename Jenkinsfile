@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'test-jenkins-agent' }
+    agent { label 'plivoAgent'}
 
     stages {
         stage('Checkout') {

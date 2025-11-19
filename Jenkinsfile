@@ -5,9 +5,6 @@ pipeline {
         stage('Checkout') {
             sh 'pwd'
         }
-        
-       
     }
     
-
 }

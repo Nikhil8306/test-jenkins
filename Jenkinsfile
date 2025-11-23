@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'plivoAgent' }
+    agent { label 'conv-ai-agent' }
     
     stages {
         stage('Install Dependencies') {
@@ -25,18 +25,22 @@ pipeline {
         
         stage('Deploy with PM2') {
             steps {
-                echo 'Deploying application with PM2...'
-                sh '''
-                    npx pm2 stop test-jenkins || true
-                    npx pm2 delete test-jenkins || true
-                    
-                    npx pm2 start index.js --name test-jenkins
-                    
-                    npx pm2 save
-                    
-                    npx pm2 list
-                    npx pm2 info test-jenkins
-                '''
+                withCredentials([
+                    string(credentialId:'TESTKEY', variable:'TESTKEY')
+                ]){
+                    echo 'Deploying application with PM2...'
+                    sh '''
+                        npx pm2 stop test-jenkins || true
+                        npx pm2 delete test-jenkins || true
+                        
+                        npx pm2 start index.js --name test-jenkins
+                        
+                        npx pm2 save
+                        
+                        npx pm2 list
+                        npx pm2 info test-jenkins
+                    '''
+                }
             }
         }
     }

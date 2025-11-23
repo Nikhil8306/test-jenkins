@@ -7,7 +7,7 @@ const app = express();
 
 
 app.get("/", (req, res) => {
-  res.send("Hello There")
+  res.send(process.env.TESTKEY)
 })
 
 app.get("/secret", async (_, res) => {

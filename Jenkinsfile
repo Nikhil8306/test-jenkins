@@ -26,7 +26,7 @@ pipeline {
         stage('Deploy with PM2') {
             steps {
                 withCredentials([
-                    string(credentialId:'TESTKEY', variable:'TESTKEY')
+                    string(credentialsId:'TESTKEY', variable:'TESTKEY')
                 ]){
                     echo 'Deploying application with PM2...'
                     sh '''

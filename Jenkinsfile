@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'hola-agent' }
+    agent { label 'hola-pwa-agent' }
     
     stages {
         stage('Install Dependencies') {

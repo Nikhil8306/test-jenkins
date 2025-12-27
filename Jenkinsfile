@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'conv-ai-agent' }
+    agent { label 'hola-agent' }
     
     stages {
         stage('Install Dependencies') {

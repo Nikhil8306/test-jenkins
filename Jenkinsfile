@@ -49,7 +49,7 @@ pipeline {
                             npx pm2 reload ${APP_NAME} --update-env
                         else
                             echo "=== Starting new app ==="
-                            PORT=${PORT} npx pm2 dev npm \
+                            PORT=${PORT} npx pm2 start "node index.js \
                                 --name ${APP_NAME} \
                                 --cwd "$WORK_DIR" \
                                 -- start

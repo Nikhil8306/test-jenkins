@@ -45,10 +45,10 @@ pipeline {
                         if npx pm2 describe ${APP_NAME} > /dev/null 2>&1 && npx pm2 describe ${APP_NAME} | grep -q "online"; then
                             echo "=== Reloading existing app (zero downtime) ==="
 
-                            pm2 reload ${APP_NAME} --wait-ready --listen-timeout 10000
+                            pm2 reload ${APP_NAME}
                         else
                             echo "=== Starting new app ==="
-                            PORT=${PORT} npx pm2 start "node index.js" \
+                            PORT=${PORT} npx pm2 start -i 2 "node index.js" \
                                 --name ${APP_NAME} \
                                 -- start
                         fi

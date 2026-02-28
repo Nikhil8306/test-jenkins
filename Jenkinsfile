@@ -43,7 +43,6 @@ pipeline {
                     sh 'export PATH=/usr/bin:$PATH'
                     sh '''
                         set -e
-                        WORK_DIR=$(pwd)
                         if npx pm2 describe ${APP_NAME} > /dev/null 2>&1 && npx pm2 describe ${APP_NAME} | grep -q "online"; then
                             echo "=== Reloading existing app (zero downtime) ==="
                             npx pm2 reload ${APP_NAME} --update-env
@@ -51,23 +50,9 @@ pipeline {
                             echo "=== Starting new app ==="
                             PORT=${PORT} npx pm2 start "node index.js \
                                 --name ${APP_NAME} \
-                                --cwd "$WORK_DIR" \
                                 -- start
                         fi
 
-                        echo "=== Waiting for app to be online ==="
-                        MAX_WAIT=30
-                        COUNT=0
-                        until npx pm2 describe ${APP_NAME} | grep -q "online"; do
-                            if [ $COUNT -ge $MAX_WAIT ]; then
-                                echo "App failed to come online within ${MAX_WAIT}s"
-                                npx pm2 logs ${APP_NAME} --lines 50 --nostream
-                                exit 1
-                            fi
-                            echo "Waiting... (${COUNT}s)"
-                            sleep 1
-                            COUNT=$((COUNT + 1))
-                        done
 
                         echo "=== App is online ==="
                         npx pm2 list

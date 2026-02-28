@@ -48,7 +48,7 @@ pipeline {
                             pm2 reload ${APP_NAME}
                         else
                             echo "=== Starting new app ==="
-                            PORT=${PORT} npx pm2 start index.js -i 4 --kill-timeout 10000\
+                            PORT=${PORT} npx pm2 start index.js -i 2 --kill-timeout 10000\
                                 --name ${APP_NAME} \
                                 -- start
                         fi

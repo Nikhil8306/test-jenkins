@@ -11,6 +11,11 @@ pipeline {
     }
     stages {
 
+        stage('sourcing') {
+            steps {
+                source "/var/lib/jenkins/.nvm/nvm.sh"
+            }
+        }
 
         stage('Install Dependencies') {
             steps {

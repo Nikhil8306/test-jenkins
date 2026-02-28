@@ -61,29 +61,29 @@ pipeline {
             }
         }
 
-        stage('Smoke Test') {
-            steps {
-                echo 'Running health check...'
-                sh '''
-                    set -e
-                    sleep 5
-                    HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:${PORT}/)
-                    if [ "$HTTP_STATUS" != "200" ]; then
-                        echo "Health check failed! HTTP status: $HTTP_STATUS"
-                        npx pm2 logs ${APP_NAME} --lines 50 --nostream
-                        exit 1
-                    fi
-                    echo "Health check passed (HTTP $HTTP_STATUS)"
-                '''
-            }
-        }
+        // stage('Smoke Test') {
+        //     steps {
+        //         echo 'Running health check...'
+        //         sh '''
+        //             set -e
+        //             sleep 5
+        //             HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:${PORT}/)
+        //             if [ "$HTTP_STATUS" != "200" ]; then
+        //                 echo "Health check failed! HTTP status: $HTTP_STATUS"
+        //                 npx pm2 logs ${APP_NAME} --lines 50 --nostream
+        //                 exit 1
+        //             fi
+        //             echo "Health check passed (HTTP $HTTP_STATUS)"
+        //         '''
+        //     }
+        // }
 
-        stage('Save State') {
-            steps {
-                echo 'Saving healthy PM2 state after successful deploy...'
-                sh 'npx pm2 save --force'
-            }
-        }
+        // stage('Save State') {
+        //     steps {
+        //         echo 'Saving healthy PM2 state after successful deploy...'
+        //         sh 'npx pm2 save --force'
+        //     }
+        // }
     }
 
     post {

@@ -6,21 +6,9 @@ pipeline {
     stages {
         stage('Setup Environment') {
             steps {
-                script {
-                    if (env.BRANCH_NAME == 'main') {
-                        env.DEPLOY_ENV = 'production'
-                        env.APP_NAME = 'hola-ai-backend'
-                        env.PORT = '2001'
-                        env.CREDENTIALS_ID = 'hola-secrets'
-                    } else if (env.BRANCH_NAME == 'staging') {
-                        env.DEPLOY_ENV = 'staging'
-                        env.APP_NAME = 'hola-ai-backend-staging'
-                        env.PORT = '9000'
-                        env.CREDENTIALS_ID = 'staging-hola-secrets'
-                    } else {
-                        error("Branch '${env.BRANCH_NAME}' is not allowed to deploy")
-                    }
-                    echo "Deploying to ${env.DEPLOY_ENV} on port ${env.PORT}"
+                environment {
+                    APP_NAME = 'my-nextjs-app'
+                    PORT = '2001
                 }
             }
         }

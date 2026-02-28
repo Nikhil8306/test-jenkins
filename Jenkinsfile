@@ -37,17 +37,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    sh 'export PATH=/usr/bin:$PATH'
-                    sh '''
-                        npm run build
-                    '''
-                }
-            }
-        }
-
         stage('Deploy') {
             steps {
                 script {
@@ -60,7 +49,7 @@ pipeline {
                             npx pm2 reload ${APP_NAME} --update-env
                         else
                             echo "=== Starting new app ==="
-                            PORT=${PORT} npx pm2 start npm \
+                            PORT=${PORT} npx pm2 dev npm \
                                 --name ${APP_NAME} \
                                 --cwd "$WORK_DIR" \
                                 -- start

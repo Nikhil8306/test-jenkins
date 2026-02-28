@@ -12,6 +12,7 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
+                sh 'export PATH=/usr/bin:$PATH'
                 echo 'Installing dependencies!'
                 sh 'node --version'
                 sh 'npm --version'
@@ -22,6 +23,7 @@ pipeline {
         stage('Snapshot Current State') {
             steps {
                 echo 'Saving current healthy PM2 state before deploy...'
+                sh 'export PATH=/usr/bin:$PATH'
                 sh '''
                     # Only snapshot if app is already running
                     APP_STATUS=$(npx pm2 describe ${APP_NAME} 2>/dev/null | grep -w "status" | grep -w "online" | wc -l)
@@ -38,6 +40,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    sh 'export PATH=/usr/bin:$PATH'
                     sh '''
                         npm run build
                     '''
@@ -48,7 +51,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    
+                    sh 'export PATH=/usr/bin:$PATH'
                     sh '''
                         set -e
                         WORK_DIR=$(pwd)
@@ -87,6 +90,7 @@ pipeline {
 
         stage('Smoke Test') {
             steps {
+                sh 'export PATH=/usr/bin:$PATH'
                 echo 'Running health check...'
                 sh '''
                     set -e
@@ -104,6 +108,7 @@ pipeline {
 
         stage('Save State') {
             steps {
+                sh 'export PATH=/usr/bin:$PATH'
                 echo 'Saving healthy PM2 state after successful deploy...'
                 sh 'npx pm2 save --force'
             }

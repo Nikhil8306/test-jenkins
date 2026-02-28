@@ -10,13 +10,6 @@ pipeline {
         disableConcurrentBuilds()
     }
     stages {
-
-        stage('sourcing') {
-            steps {
-                sh 'source /var/lib/jenkins/.nvm/nvm.sh'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 echo 'Installing dependencies!'

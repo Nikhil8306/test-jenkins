@@ -13,7 +13,7 @@ pipeline {
 
         stage('sourcing') {
             steps {
-                source "/var/lib/jenkins/.nvm/nvm.sh"
+                sh 'source /var/lib/jenkins/.nvm/nvm.sh'
             }
         }
 

@@ -1,17 +1,16 @@
 pipeline {
     agent any
+
+    environment {
+        APP_NAME = 'my-app'
+        PORT = '2001'
+    }
+
     options {
         disableConcurrentBuilds()
     }
     stages {
-        stage('Setup Environment') {
-            steps {
-                environment {
-                    APP_NAME = 'my-nextjs-app'
-                    PORT = '2001
-                }
-            }
-        }
+
 
         stage('Install Dependencies') {
             steps {

@@ -95,31 +95,6 @@ pipeline {
         }
         failure {
             echo 'Deployment failed — attempting rollback to last healthy state'
-            sh '''
-                npx pm2 resurrect
-
-                echo "Verifying rollback..."
-                MAX_WAIT=20
-                COUNT=0
-                until npx pm2 describe ${APP_NAME} | grep -q "online"; do
-                    if [ $COUNT -ge $MAX_WAIT ]; then
-                        echo "Rollback failed! Manual intervention needed."
-                        exit 1
-                    fi
-                    sleep 1
-                    COUNT=$((COUNT + 1))
-                done
-
-                HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:${PORT}/api/health-check)
-                if [ "$HTTP_STATUS" != "200" ]; then
-                    echo "Rollback health check failed! Manual intervention needed."
-                    npx pm2 logs ${APP_NAME} --lines 50 --nostream
-                    exit 1
-                fi
-
-                echo "Rollback successful (HTTP $HTTP_STATUS)"
-                npx pm2 list
-            '''
         }
         always {
             echo 'Pipeline finished'
